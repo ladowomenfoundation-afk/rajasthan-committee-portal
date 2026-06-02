@@ -1,1 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Member Registration</title>
 
+  <style>
+    body{
+      font-family: Arial;
+      background:#f4f6f9;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+    }
+
+    .form-box{
+      background:white;
+      padding:25px;
+      width:350px;
+      border-radius:10px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    h2{
+      text-align:center;
+      margin-bottom:20px;
+    }
+
+    input{
+      width:100%;
+      padding:10px;
+      margin:8px 0;
+      border:1px solid #ddd;
+      border-radius:5px;
+    }
+
+    button{
+      width:100%;
+      padding:10px;
+      background:#2563eb;
+      color:white;
+      border:none;
+      border-radius:5px;
+      cursor:pointer;
+      margin-top:10px;
+    }
+
+    button:hover{
+      background:#1d4ed8;
+    }
+
+    .msg{
+      text-align:center;
+      margin-top:10px;
+      font-size:14px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="form-box">
+  <h2>Member Registration</h2>
+
+  <input type="text" id="name" placeholder="Name">
+  <input type="text" id="mobile" placeholder="Mobile">
+  <input type="text" id="block" placeholder="Block">
+  <input type="text" id="shg" placeholder="SHG Name">
+
+  <button onclick="submitForm()">Submit</button>
+
+  <div class="msg" id="msg"></div>
+</div>
+
+<script>
+
+const API_URL = "YOUR_GOOGLE_SCRIPT_URL_HERE";
+
+async function submitForm(){
+
+  let data = {
+    name: document.getElementById("name").value,
+    mobile: document.getElementById("mobile").value,
+    block: document.getElementById("block").value,
+    shg: document.getElementById("shg").value
+  };
+
+  document.getElementById("msg").innerText = "Submitting...";
+
+  try{
+    let res = await fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify(data)
+    });
+
+    let result = await res.json();
+
+    if(result.status === "success"){
+      document.getElementById("msg").innerText = "✅ Member Saved Successfully";
+    } else {
+      document.getElementById("msg").innerText = "❌ Error saving data";
+    }
+
+  } catch(err){
+    document.getElementById("msg").innerText = "❌ Network Error";
+  }
+}
+
+</script>
+
+</body>
+</html>
