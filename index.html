@@ -1,62 +1,142 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rajasthan Committee Portal</title>
+<title>Lado Women Foundation - Rajasthan</title>
 
-<link rel="stylesheet" href="style.css">
+<style>
+body{margin:0;font-family:Arial;scroll-behavior:smooth}
 
+/* NAV */
+.nav{
+  position:fixed;top:0;width:100%;
+  background:#111827;color:white;
+  display:flex;justify-content:space-between;
+  padding:10px 20px;z-index:1000;
+}
+.nav a{color:white;margin:0 10px;text-decoration:none}
+
+/* SECTIONS */
+section{height:100vh;padding:80px 40px}
+.hero{background:linear-gradient(135deg,#ec4899,#3b82f6);color:white;text-align:center}
+.about{background:#f4f6f9}
+.committee{background:#fff}
+.projects{background:#f4f6f9}
+.news{background:#fff}
+.contact{background:#111827;color:white}
+
+/* SLIDER */
+.slider{
+  width:100%;height:300px;
+  overflow:hidden;border-radius:10px
+}
+.slider img{
+  width:100%;height:300px;object-fit:cover;
+  animation:slide 20s infinite;
+}
+
+@keyframes slide{
+  0%{transform:translateX(0)}
+  20%{transform:translateX(-100%)}
+  40%{transform:translateX(-200%)}
+  60%{transform:translateX(-300%)}
+  80%{transform:translateX(-400%)}
+}
+
+/* SIDEBAR */
+.sidebar{
+  position:fixed;right:0;top:60px;
+  width:220px;height:100%;
+  background:#1f2937;color:white;
+  padding:10px;overflow:auto;
+}
+.sidebar h3{color:#fff}
+.sidebar a{display:block;color:#ccc;margin:5px 0;text-decoration:none}
+
+</style>
 </head>
+
 <body>
 
-<header>
-<h1>Lado Women Foundation</h1>
-<p>Rajasthan Committee Management Portal</p>
-</header>
+<!-- NAV -->
+<div class="nav">
+  <div>Lado Women Foundation</div>
+  <div>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#committee">Committee</a>
+    <a href="#contact">Contact</a>
+    <a href="login.html">Login</a>
+  </div>
+</div>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="state-committee.html">State Committee</a>
-<a href="district-committee.html">District Committee</a>
-<a href="contact.html">Contact</a>
-</nav>
+<!-- HOME -->
+<section id="home" class="hero">
+  <h1>Lado Women Foundation, Rajasthan</h1>
+  <p>Women Empowerment • Skill Development • Rural Transformation</p>
 
-<section class="hero">
-<h2>Welcome to Rajasthan Committee Portal</h2>
-<p>State, District, Block and SHG Management System</p>
+  <div class="slider">
+    <img src="https://source.unsplash.com/1600x900/?women,india">
+    <img src="https://source.unsplash.com/1600x900/?rural,women">
+    <img src="https://source.unsplash.com/1600x900/?education,children">
+    <img src="https://source.unsplash.com/1600x900/?handicraft,women">
+    <img src="https://source.unsplash.com/1600x900/?training,women">
+  </div>
 </section>
 
-<section class="stats">
-
-<div class="card">
-<h3>50+</h3>
-<p>District Committees</p>
-</div>
-
-<div class="card">
-<h3>500+</h3>
-<p>Block Committees</p>
-</div>
-
-<div class="card">
-<h3>10000+</h3>
-<p>Members</p>
-</div>
-
-<div class="card">
-<h3>5000+</h3>
-<p>SHG Women</p>
-</div>
-
+<!-- ABOUT -->
+<section id="about" class="about">
+<h2>About Us</h2>
+<p>Empowering rural women of Rajasthan through SHG, skill training, digital education, health awareness and livelihood programs.</p>
 </section>
 
-<footer>
-<p>© 2026 Lado Women Foundation Rajasthan</p>
-</footer>
+<!-- COMMITTEE -->
+<section id="committee" class="committee">
+<h2>National & State Committee</h2>
+<p>Only verified committee members are shown here.</p>
+</section>
 
-<script src="script.js"></script>
+<!-- PROJECTS -->
+<section id="projects" class="projects">
+<h2>Projects & Campaigns</h2>
+<p>Silai training, handicrafts, masala industry, digital literacy, legal awareness, health camps.</p>
+</section>
+
+<!-- NEWS -->
+<section id="news" class="news">
+<h2>News & Gallery</h2>
+<p>Latest updates and success stories of women empowerment.</p>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+<h2>Contact Us</h2>
+<p>Office: 7737307790</p>
+<p>CIN: U88900RJ2023NPL090501</p>
+<p>PAN: AAHCI3464J</p>
+</section>
+
+<!-- RIGHT SIDEBAR -->
+<div class="sidebar">
+<h3>Rajasthan Districts</h3>
+
+<a href="#">Jaipur</a>
+<a href="#">Jodhpur</a>
+<a href="#">Udaipur</a>
+<a href="#">Ajmer</a>
+<a href="#">Sikar</a>
+<a href="#">Kota</a>
+<a href="#">Bikaner</a>
+
+<h3>Get Involved</h3>
+<a href="#">Internship</a>
+<a href="#">Volunteers</a>
+<a href="#">Members</a>
+
+<h3>Projects</h3>
+<a href="#">Silai Training</a>
+<a href="#">Digital Education</a>
+<a href="#">Health Camps</a>
+</div>
 
 </body>
-</html>
