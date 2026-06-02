@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rajasthan Committee Dashboard</title>
-
-  <link rel="stylesheet" href="style.css">
+  <title>Rajasthan MIS Dashboard</title>
 
   <style>
     body{
@@ -16,9 +14,9 @@
 
     /* Sidebar */
     .sidebar{
-      width:250px;
+      width:240px;
       height:100vh;
-      background:#1f2937;
+      background:#111827;
       position:fixed;
       top:0;
       left:0;
@@ -27,18 +25,18 @@
     }
 
     .sidebar h2{
+      font-size:18px;
+      margin-bottom:20px;
       color:#fff;
-      font-size:20px;
-      margin-bottom:30px;
     }
 
     .sidebar a{
       display:block;
-      color:#ccc;
+      color:#cbd5e1;
       padding:10px;
       text-decoration:none;
       margin:5px 0;
-      border-radius:5px;
+      border-radius:6px;
     }
 
     .sidebar a:hover{
@@ -48,13 +46,20 @@
 
     /* Main */
     .main{
-      margin-left:270px;
+      margin-left:260px;
       padding:20px;
     }
 
+    .title{
+      font-size:26px;
+      margin-bottom:20px;
+      color:#111827;
+    }
+
+    /* Cards */
     .cards{
       display:grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns:repeat(4, 1fr);
       gap:20px;
     }
 
@@ -62,24 +67,31 @@
       background:white;
       padding:20px;
       border-radius:10px;
-      box-shadow:0 2px 6px rgba(0,0,0,0.1);
+      box-shadow:0 2px 8px rgba(0,0,0,0.08);
+      transition:0.3s;
+    }
+
+    .card:hover{
+      transform:translateY(-5px);
     }
 
     .card h3{
       margin:0;
-      color:#111827;
+      font-size:16px;
+      color:#6b7280;
     }
 
     .card p{
-      font-size:22px;
-      font-weight:bold;
+      font-size:28px;
       margin-top:10px;
+      font-weight:bold;
       color:#2563eb;
     }
 
-    @media(max-width:768px){
+    /* Responsive */
+    @media(max-width:900px){
       .cards{
-        grid-template-columns:1fr 1fr;
+        grid-template-columns:repeat(2, 1fr);
       }
 
       .sidebar{
@@ -90,8 +102,14 @@
         margin-left:210px;
       }
     }
-  </style>
 
+    @media(max-width:600px){
+      .cards{
+        grid-template-columns:1fr;
+      }
+    }
+
+  </style>
 </head>
 
 <body>
@@ -105,36 +123,60 @@
     <a href="reports.html">📊 Reports</a>
   </div>
 
-  <!-- Main Content -->
+  <!-- Main -->
   <div class="main">
 
-    <h1>Dashboard</h1>
+    <div class="title">Dashboard Overview</div>
 
     <div class="cards">
 
       <div class="card">
         <h3>Total Members</h3>
-        <p>0</p>
+        <p id="members">0</p>
       </div>
 
       <div class="card">
         <h3>Total Blocks</h3>
-        <p>0</p>
+        <p id="blocks">0</p>
       </div>
 
       <div class="card">
         <h3>SHG Groups</h3>
-        <p>0</p>
+        <p id="shg">0</p>
       </div>
 
       <div class="card">
-        <h3>Active Trainings</h3>
-        <p>0</p>
+        <h3>Trainings</h3>
+        <p id="trainings">0</p>
       </div>
 
     </div>
 
   </div>
+
+  <!-- SCRIPT -->
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbwettPIRLCY97iovedPaKisdtCMiPIc44ZlDfmz7D69n9-bX9JP6x0iRTrMrMAzFgjn/exec";
+
+    async function loadData(){
+      try{
+        let res = await fetch(API_URL);
+        let data = await res.json();
+
+        console.log("API DATA:", data);
+
+        document.getElementById("members").innerText = data.totalMembers || 0;
+        document.getElementById("blocks").innerText = data.totalBlocks || 0;
+        document.getElementById("shg").innerText = data.shgGroups || 0;
+        document.getElementById("trainings").innerText = data.trainings || 0;
+
+      } catch(err){
+        console.log("Error loading dashboard:", err);
+      }
+    }
+
+    loadData();
+  </script>
 
 </body>
 </html>
