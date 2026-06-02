@@ -1,182 +1,180 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rajasthan MIS Dashboard</title>
+<meta charset="UTF-8">
+<title>Rajasthan NGO MIS Dashboard</title>
 
-  <style>
-    body{
-      margin:0;
-      font-family: Arial;
-      background:#f4f6f9;
-    }
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#f4f6f9;
+}
 
-    /* Sidebar */
-    .sidebar{
-      width:240px;
-      height:100vh;
-      background:#111827;
-      position:fixed;
-      top:0;
-      left:0;
-      color:white;
-      padding:20px;
-    }
+/* Sidebar */
+.sidebar{
+  width:230px;
+  height:100vh;
+  background:#111827;
+  position:fixed;
+  left:0;
+  top:0;
+  color:white;
+  padding:20px;
+}
 
-    .sidebar h2{
-      font-size:18px;
-      margin-bottom:20px;
-      color:#fff;
-    }
+.sidebar h2{
+  font-size:18px;
+  margin-bottom:20px;
+}
 
-    .sidebar a{
-      display:block;
-      color:#cbd5e1;
-      padding:10px;
-      text-decoration:none;
-      margin:5px 0;
-      border-radius:6px;
-    }
+.sidebar a{
+  display:block;
+  color:#cbd5e1;
+  text-decoration:none;
+  padding:10px;
+  margin:5px 0;
+  border-radius:6px;
+}
 
-    .sidebar a:hover{
-      background:#374151;
-      color:white;
-    }
+.sidebar a:hover{
+  background:#374151;
+}
 
-    /* Main */
-    .main{
-      margin-left:260px;
-      padding:20px;
-    }
+/* Main */
+.main{
+  margin-left:250px;
+  padding:20px;
+}
 
-    .title{
-      font-size:26px;
-      margin-bottom:20px;
-      color:#111827;
-    }
+.title{
+  font-size:22px;
+  font-weight:bold;
+  margin-bottom:20px;
+}
 
-    /* Cards */
-    .cards{
-      display:grid;
-      grid-template-columns:repeat(4, 1fr);
-      gap:20px;
-    }
+/* Cards */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+}
 
-    .card{
-      background:white;
-      padding:20px;
-      border-radius:10px;
-      box-shadow:0 2px 8px rgba(0,0,0,0.08);
-      transition:0.3s;
-    }
+.card{
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  text-align:center;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
 
-    .card:hover{
-      transform:translateY(-5px);
-    }
+.card h3{
+  font-size:14px;
+  color:gray;
+}
 
-    .card h3{
-      margin:0;
-      font-size:16px;
-      color:#6b7280;
-    }
+.card p{
+  font-size:28px;
+  font-weight:bold;
+  color:#2563eb;
+}
 
-    .card p{
-      font-size:28px;
-      margin-top:10px;
-      font-weight:bold;
-      color:#2563eb;
-    }
-
-    /* Responsive */
-    @media(max-width:900px){
-      .cards{
-        grid-template-columns:repeat(2, 1fr);
-      }
-
-      .sidebar{
-        width:200px;
-      }
-
-      .main{
-        margin-left:210px;
-      }
-    }
-
-    @media(max-width:600px){
-      .cards{
-        grid-template-columns:1fr;
-      }
-    }
-
-  </style>
+/* Responsive */
+@media(max-width:900px){
+  .cards{grid-template-columns:1fr 1fr;}
+  .main{margin-left:0;}
+  .sidebar{position:relative;width:100%;height:auto;}
+}
+</style>
 </head>
 
 <body>
 
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <h2>Rajasthan MIS</h2>
-    <a href="dashboard.html">🏠 Dashboard</a>
-    <a href="members.html">👩 Members</a>
-    <a href="blocks.html">🏢 Blocks</a>
-    <a href="reports.html">📊 Reports</a>
-  </div>
+<div class="sidebar">
+<h2>NGO MIS</h2>
+<a href="dashboard.html">🏠 Dashboard</a>
+<a href="member-form.html">➕ Add Member</a>
+<a href="members.html">👩 Members</a>
+</div>
 
-  <!-- Main -->
-  <div class="main">
+<div class="main">
 
-    <div class="title">Dashboard Overview</div>
+<div class="title">Rajasthan Committee Dashboard</div>
 
-    <div class="cards">
+<div class="cards">
 
-      <div class="card">
-        <h3>Total Members</h3>
-        <p id="members">0</p>
-      </div>
+<div class="card">
+<h3>Total Members</h3>
+<p id="members">0</p>
+</div>
 
-      <div class="card">
-        <h3>Total Blocks</h3>
-        <p id="blocks">0</p>
-      </div>
+<div class="card">
+<h3>State Committee</h3>
+<p id="state">0</p>
+</div>
 
-      <div class="card">
-        <h3>SHG Groups</h3>
-        <p id="shg">0</p>
-      </div>
+<div class="card">
+<h3>District Committee</h3>
+<p id="district">0</p>
+</div>
 
-      <div class="card">
-        <h3>Trainings</h3>
-        <p id="trainings">0</p>
-      </div>
+<div class="card">
+<h3>Block Committee</h3>
+<p id="block">0</p>
+</div>
 
-    </div>
+<div class="card">
+<h3>Gram Panchayat</h3>
+<p id="gram">0</p>
+</div>
 
-  </div>
+<div class="card">
+<h3>Village Committee</h3>
+<p id="village">0</p>
+</div>
 
-  <!-- SCRIPT -->
-  <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbwettPIRLCY97iovedPaKisdtCMiPIc44ZlDfmz7D69n9-bX9JP6x0iRTrMrMAzFgjn/exec";
+<div class="card">
+<h3>Trainings</h3>
+<p id="training">0</p>
+</div>
 
-    async function loadData(){
-      try{
-        let res = await fetch(API_URL);
-        let data = await res.json();
+<div class="card">
+<h3>Attendance</h3>
+<p id="attendance">0</p>
+</div>
 
-        console.log("API DATA:", data);
+</div>
 
-        document.getElementById("members").innerText = data.totalMembers || 0;
-        document.getElementById("blocks").innerText = data.totalBlocks || 0;
-        document.getElementById("shg").innerText = data.shgGroups || 0;
-        document.getElementById("trainings").innerText = data.trainings || 0;
+</div>
 
-      } catch(err){
-        console.log("Error loading dashboard:", err);
-      }
-    }
+<script>
 
-    loadData();
-  </script>
+// 👇 PUT YOUR APPS SCRIPT URL HERE
+const API = "YOUR_SCRIPT_URL_HERE";
+
+async function loadDashboard(){
+
+  try{
+    let res = await fetch(API);
+    let d = await res.json();
+
+    document.getElementById("members").innerText = d.totalMembers || 0;
+    document.getElementById("state").innerText = d.stateCommittee || 0;
+    document.getElementById("district").innerText = d.districtCommittee || 0;
+    document.getElementById("block").innerText = d.blockCommittee || 0;
+    document.getElementById("gram").innerText = d.gramCommittee || 0;
+    document.getElementById("village").innerText = d.villageCommittee || 0;
+    document.getElementById("training").innerText = d.trainings || 0;
+    document.getElementById("attendance").innerText = d.attendance || 0;
+
+  } catch(err){
+    console.log("Error:", err);
+  }
+}
+
+loadDashboard();
+
+</script>
 
 </body>
 </html>
