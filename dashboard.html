@@ -1,37 +1,100 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Dashboard</title>
-<link rel="stylesheet" href="assets/style.css">
+<meta charset="UTF-8">
+<title>Lado Women Foundation MIS</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#f4f6f9;
+}
+
+.header{
+background:#111827;
+color:white;
+padding:15px;
+text-align:center;
+font-size:20px;
+font-weight:bold;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+.card h3{color:gray;font-size:14px}
+.card span{font-size:26px;color:#2563eb;font-weight:bold}
+
+table{
+width:100%;
+background:white;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th,td{
+border:1px solid #ddd;
+padding:10px;
+font-size:14px;
+}
+
+th{
+background:#2563eb;
+color:white;
+}
+
+.container{
+padding:20px;
+}
+</style>
 </head>
 
 <body>
 
-<div class="sidebar">
-
-<h3>Dashboard</h3>
-
-<a href="#">Members</a>
-<a href="#">Committees</a>
-<a href="#">Districts</a>
-<a href="#">Projects</a>
-<a href="#">Reports</a>
-<a href="#">Gallery</a>
-
+<div class="header">
+Lado Women Foundation - Rajasthan MIS Dashboard
 </div>
-
-<div class="main">
-
-<h1>Rajasthan MIS Dashboard</h1>
 
 <div class="grid">
 
-<div class="card">Members <span id="m">0</span></div>
-<div class="card">Districts <span>33</span></div>
-<div class="card">Blocks <span>0</span></div>
-<div class="card">Trainings <span>0</span></div>
+<div class="card">
+<h3>Total Members</h3>
+<span id="m">0</span>
+</div>
+
+<div class="card">
+<h3>Districts</h3>
+<span id="d">33</span>
+</div>
+
+<div class="card">
+<h3>Blocks</h3>
+<span id="b">0</span>
+</div>
+
+<div class="card">
+<h3>Trainings</h3>
+<span id="t">0</span>
+</div>
 
 </div>
+
+<div class="container">
+
+<h2>Member Master</h2>
 
 <table>
 <thead>
@@ -42,12 +105,46 @@
 <th>Block</th>
 </tr>
 </thead>
+
 <tbody id="table"></tbody>
 </table>
 
 </div>
 
-<script src="assets/script.js"></script>
+<script>
+
+const API = "https://script.google.com/macros/s/AKfycbwettPIRLCY97iovedPaKisdtCMiPIc44ZlDfmz7D69n9-bX9JP6x0iRTrMrMAzFgjn/exec";
+
+async function load(){
+
+// DASHBOARD
+let res = await fetch(API);
+let d = await res.json();
+
+document.getElementById("m").innerText = d.totalMembers || 0;
+
+// MEMBERS
+let res2 = await fetch(API+"?action=members");
+let data = await res2.json();
+
+let table = document.getElementById("table");
+table.innerHTML="";
+
+data.forEach(x=>{
+table.innerHTML += `
+<tr>
+<td>${x.fullName || ""}</td>
+<td>${x.mobile || ""}</td>
+<td>${x.district || ""}</td>
+<td>${x.block || ""}</td>
+</tr>`;
+});
+
+}
+
+load();
+
+</script>
 
 </body>
 </html>
