@@ -2,23 +2,43 @@
 <html>
 <head>
 <title>Login</title>
-<link rel="stylesheet" href="assets/style.css">
 </head>
 
 <body>
 
-<div class="login-box">
-<h2>NGO Login</h2>
+<h2>Login Portal</h2>
 
 <input id="user" placeholder="User ID">
 <input id="pass" type="password" placeholder="Password">
 
 <button onclick="login()">Login</button>
 
-<p id="msg"></p>
-</div>
+<script>
 
-<script src="assets/script.js"></script>
+const API="YOUR_APPS_SCRIPT_URL";
+
+async function login(){
+
+let res = await fetch(API+"?action=login",{
+method:"POST",
+body:JSON.stringify({
+userId:user.value,
+password:pass.value
+})
+});
+
+let d = await res.json();
+
+if(d.status==="success"){
+localStorage.setItem("role",d.role);
+window.location="dashboard.html";
+}else{
+alert("Login Failed");
+}
+
+}
+
+</script>
 
 </body>
 </html>
