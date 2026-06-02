@@ -9,97 +9,136 @@ body{
   margin:0;
   font-family:Arial;
   background:#f4f6f9;
+  display:flex;
 }
 
-/* Sidebar */
-.sidebar{
-  width:230px;
-  height:100vh;
-  background:#111827;
-  position:fixed;
-  left:0;
-  top:0;
+/* LEFT PANEL */
+.left{
+  width:260px;
+  background:#0f172a;
   color:white;
-  padding:20px;
+  height:100vh;
+  position:fixed;
+  padding:15px;
+  overflow:auto;
 }
 
-.sidebar h2{
+.left h2{
   font-size:18px;
-  margin-bottom:20px;
+  margin-bottom:10px;
 }
 
-.sidebar a{
-  display:block;
-  color:#cbd5e1;
-  text-decoration:none;
+.map{
+  width:100%;
+  border-radius:10px;
+  margin:10px 0;
+}
+
+.district{
   padding:10px;
   margin:5px 0;
+  background:#1e293b;
   border-radius:6px;
+  cursor:pointer;
 }
 
-.sidebar a:hover{
-  background:#374151;
+.district:hover{
+  background:#334155;
 }
 
-/* Main */
+/* MAIN */
 .main{
-  margin-left:250px;
+  margin-left:280px;
   padding:20px;
+  width:100%;
 }
 
 .title{
   font-size:22px;
   font-weight:bold;
-  margin-bottom:20px;
+  margin-bottom:15px;
 }
 
-/* Cards */
+/* CARDS */
 .cards{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:20px;
+  gap:15px;
 }
 
 .card{
   background:white;
-  padding:20px;
+  padding:15px;
   border-radius:10px;
   text-align:center;
   box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
 
 .card h3{
-  font-size:14px;
+  font-size:13px;
   color:gray;
 }
 
 .card p{
-  font-size:28px;
-  font-weight:bold;
+  font-size:26px;
   color:#2563eb;
+  font-weight:bold;
 }
 
-/* Responsive */
+/* TABLE */
+.table{
+  margin-top:20px;
+  background:white;
+  padding:10px;
+  border-radius:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,td{
+  padding:10px;
+  border:1px solid #ddd;
+  font-size:13px;
+}
+
+th{
+  background:#2563eb;
+  color:white;
+}
+
 @media(max-width:900px){
   .cards{grid-template-columns:1fr 1fr;}
+  body{flex-direction:column;}
+  .left{position:relative;width:100%;height:auto;}
   .main{margin-left:0;}
-  .sidebar{position:relative;width:100%;height:auto;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="sidebar">
-<h2>NGO MIS</h2>
-<a href="dashboard.html">🏠 Dashboard</a>
-<a href="member-form.html">➕ Add Member</a>
-<a href="members.html">👩 Members</a>
+<!-- LEFT PANEL -->
+<div class="left">
+
+<h2>🇮🇳 Rajasthan MIS</h2>
+
+<!-- Rajasthan Map Image -->
+<img class="map" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Rajasthan_in_India.svg/512px-Rajasthan_in_India.svg.png">
+
+<div id="districtList">
+Loading districts...
 </div>
 
+</div>
+
+<!-- MAIN -->
 <div class="main">
 
-<div class="title">Rajasthan Committee Dashboard</div>
+<div class="title" id="title">Dashboard Overview</div>
 
 <div class="cards">
 
@@ -109,28 +148,13 @@ body{
 </div>
 
 <div class="card">
-<h3>State Committee</h3>
-<p id="state">0</p>
-</div>
-
-<div class="card">
 <h3>District Committee</h3>
-<p id="district">0</p>
+<p id="districtCount">0</p>
 </div>
 
 <div class="card">
 <h3>Block Committee</h3>
-<p id="block">0</p>
-</div>
-
-<div class="card">
-<h3>Gram Panchayat</h3>
-<p id="gram">0</p>
-</div>
-
-<div class="card">
-<h3>Village Committee</h3>
-<p id="village">0</p>
+<p id="blockCount">0</p>
 </div>
 
 <div class="card">
@@ -138,10 +162,24 @@ body{
 <p id="training">0</p>
 </div>
 
-<div class="card">
-<h3>Attendance</h3>
-<p id="attendance">0</p>
 </div>
+
+<!-- TABLE -->
+<div class="table">
+<h3>District Wise Team</h3>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Mobile</th>
+<th>District</th>
+<th>Block</th>
+</tr>
+</thead>
+
+<tbody id="tableBody"></tbody>
+</table>
 
 </div>
 
@@ -149,30 +187,72 @@ body{
 
 <script>
 
-// 👇 PUT YOUR APPS SCRIPT URL HERE
+// 🔥 YOUR APPS SCRIPT URL
 const API = "YOUR_SCRIPT_URL_HERE";
 
-async function loadDashboard(){
+// Rajasthan districts (static list)
+const districts = [
+"Ajmer","Alwar","Banswara","Baran","Barmer","Bharatpur","Bhilwara",
+"Bikaner","Bundi","Chittorgarh","Churu","Dausa","Dholpur","Dungarpur",
+"Hanumangarh","Jaipur","Jaisalmer","Jalore","Jhalawar","Jhunjhunu",
+"Jodhpur","Karauli","Kota","Nagaur","Pali","Pratapgarh","Rajsamand",
+"Sawai Madhopur","Sikar","Sirohi","Sri Ganganagar","Tonk","Udaipur"
+];
 
-  try{
-    let res = await fetch(API);
-    let d = await res.json();
+// LOAD DISTRICTS
+function loadDistricts(){
+  let box = document.getElementById("districtList");
+  box.innerHTML = "";
 
-    document.getElementById("members").innerText = d.totalMembers || 0;
-    document.getElementById("state").innerText = d.stateCommittee || 0;
-    document.getElementById("district").innerText = d.districtCommittee || 0;
-    document.getElementById("block").innerText = d.blockCommittee || 0;
-    document.getElementById("gram").innerText = d.gramCommittee || 0;
-    document.getElementById("village").innerText = d.villageCommittee || 0;
-    document.getElementById("training").innerText = d.trainings || 0;
-    document.getElementById("attendance").innerText = d.attendance || 0;
-
-  } catch(err){
-    console.log("Error:", err);
-  }
+  districts.forEach(d => {
+    box.innerHTML += <div class="district" onclick="filterDistrict('${d}')">${d}</div>;
+  });
 }
 
-loadDashboard();
+// LOAD DATA
+async function loadData(){
+
+  let res = await fetch(API + "?action=members");
+  let data = await res.json();
+
+  window.allData = data;
+
+  document.getElementById("members").innerText = data.length;
+
+  renderTable(data);
+}
+
+// TABLE RENDER
+function renderTable(data){
+
+  let tbody = document.getElementById("tableBody");
+  tbody.innerHTML = "";
+
+  data.forEach(m => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${m.name || ""}</td>
+        <td>${m.mobile || ""}</td>
+        <td>${m.district || ""}</td>
+        <td>${m.block || ""}</td>
+      </tr>
+    `;
+  });
+}
+
+// FILTER BY DISTRICT
+function filterDistrict(d){
+
+  document.getElementById("title").innerText = d + " District Team";
+
+  let filtered = window.allData.filter(x => x.district == d);
+
+  renderTable(filtered);
+}
+
+// INIT
+loadDistricts();
+loadData();
 
 </script>
 
