@@ -148,3 +148,45 @@ load();
 
 </body>
 </html>
+<div style="margin-top:30px;background:white;padding:20px;border-radius:10px">
+
+<h2>📊 District Wise Member Analytics</h2>
+
+<canvas id="districtChart"></canvas>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const API = "https://script.google.com/macros/s/AKfycbwettPIRLCY97iovedPaKisdtCMiPIc44ZlDfmz7D69n9-bX9JP6x0iRTrMrMAzFgjn/exec";
+
+async function loadChart(){
+
+  let res = await fetch(API + "?action=charts");
+  let data = await res.json();
+
+  let labels = Object.keys(data.districts);
+  let values = Object.values(data.districts);
+
+  new Chart(document.getElementById("districtChart"), {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [{
+        label: "Members per District",
+        data: values,
+        backgroundColor: "#2563eb"
+      }]
+    },
+    options: {
+      responsive: true
+    }
+  });
+
+}
+
+loadChart();
+
+</script>
