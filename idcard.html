@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ID Card</title>
+
+<style>
+body{
+font-family:Arial;
+background:#f4f6f9;
+text-align:center;
+}
+
+.card{
+width:300px;
+margin:20px auto;
+background:white;
+padding:15px;
+border-radius:10px;
+box-shadow:0 2px 10px rgba(0,0,0,0.2);
+}
+
+img{
+width:100px;
+height:100px;
+border-radius:50%;
+}
+
+.qr{
+margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Member ID Card</h2>
+
+<input id="mid" placeholder="Enter Member ID">
+<button onclick="loadCard()">Generate</button>
+
+<div class="card" id="card" style="display:none">
+
+<img id="photo">
+<h3 id="name"></h3>
+<p id="des"></p>
+<p id="mobile"></p>
+
+<img id="qr" class="qr">
+
+</div>
+
+<script>
+
+const API = "https://script.google.com/macros/s/AKfycbwettPIRLCY97iovedPaKisdtCMiPIc44ZlDfmz7D69n9-bX9JP6x0iRTrMrMAzFgjn/exec";
+
+async function loadCard(){
+
+let id = document.getElementById("mid").value;
+
+let res = await fetch(API + "?action=member&id=" + id);
+let d = await res.json();
+
+if(d.status === "not found"){
+alert("Member not found");
+return;
+}
+
+document.getElementById("card").style.display="block";
+
+document.getElementById("name").innerText = d.name;
+document.getElementById("des").innerText = d.designation + " | " + d.district;
+document.getElementById("mobile").innerText = d.mobile;
+document.getElementById("photo").src = d.photo || "https://via.placeholder.com/100";
+
+// QR GENERATION
+document.getElementById("qr").src =
+"https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=" + id;
+
+}
+
+</script>
+
+</body>
+</html>
