@@ -9,10 +9,11 @@ input{width:100%;padding:10px;margin:10px 0}
 button{width:100%;padding:10px;background:#2563eb;color:white}
 </style>
 </head>
+
 <body>
 
 <div class="box">
-<h3>Login Portal</h3>
+<h3>NGO Login</h3>
 
 <input id="user" placeholder="User ID">
 <input id="pass" type="password" placeholder="Password">
@@ -24,21 +25,32 @@ button{width:100%;padding:10px;background:#2563eb;color:white}
 
 <script>
 
-function login(){
+const API = "YOUR_SCRIPT_URL_HERE?action=login";
 
-  let u = user.value;
-  let p = pass.value;
+async function login(){
 
-  // SIMPLE DEMO LOGIN (upgrade later with Google Sheet auth)
-  if(u==="director" && p==="1234"){
-    localStorage.setItem("role","admin");
-    window.location="admin.html";
-  }
-  else if(u==="member" && p==="1234"){
-    localStorage.setItem("role","user");
-    window.location="dashboard.html";
-  }
-  else{
+  let res = await fetch(API,{
+    method:"POST",
+    body: JSON.stringify({
+      userId:user.value,
+      password:pass.value
+    })
+  });
+
+  let r = await res.json();
+
+  if(r.status=="success"){
+
+    localStorage.setItem("role",r.role);
+    localStorage.setItem("district",r.district);
+
+    if(r.role=="admin"){
+      window.location="dashboard.html";
+    }else{
+      window.location="dashboard.html";
+    }
+
+  }else{
     msg.innerText="Invalid Login";
   }
 }
