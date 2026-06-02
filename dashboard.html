@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rajasthan Committee Dashboard</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body{
+      margin:0;
+      font-family: Arial;
+      background:#f4f6f9;
+    }
+
+    /* Sidebar */
+    .sidebar{
+      width:250px;
+      height:100vh;
+      background:#1f2937;
+      position:fixed;
+      top:0;
+      left:0;
+      color:white;
+      padding:20px;
+    }
+
+    .sidebar h2{
+      color:#fff;
+      font-size:20px;
+      margin-bottom:30px;
+    }
+
+    .sidebar a{
+      display:block;
+      color:#ccc;
+      padding:10px;
+      text-decoration:none;
+      margin:5px 0;
+      border-radius:5px;
+    }
+
+    .sidebar a:hover{
+      background:#374151;
+      color:white;
+    }
+
+    /* Main */
+    .main{
+      margin-left:270px;
+      padding:20px;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:20px;
+    }
+
+    .card{
+      background:white;
+      padding:20px;
+      border-radius:10px;
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .card h3{
+      margin:0;
+      color:#111827;
+    }
+
+    .card p{
+      font-size:22px;
+      font-weight:bold;
+      margin-top:10px;
+      color:#2563eb;
+    }
+
+    @media(max-width:768px){
+      .cards{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .sidebar{
+        width:200px;
+      }
+
+      .main{
+        margin-left:210px;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Rajasthan MIS</h2>
+    <a href="dashboard.html">🏠 Dashboard</a>
+    <a href="members.html">👩 Members</a>
+    <a href="blocks.html">🏢 Blocks</a>
+    <a href="reports.html">📊 Reports</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+
+    <h1>Dashboard</h1>
+
+    <div class="cards">
+
+      <div class="card">
+        <h3>Total Members</h3>
+        <p>0</p>
+      </div>
+
+      <div class="card">
+        <h3>Total Blocks</h3>
+        <p>0</p>
+      </div>
+
+      <div class="card">
+        <h3>SHG Groups</h3>
+        <p>0</p>
+      </div>
+
+      <div class="card">
+        <h3>Active Trainings</h3>
+        <p>0</p>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
