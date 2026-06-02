@@ -2,18 +2,13 @@
 <html>
 <head>
 <title>Login</title>
-<style>
-body{display:flex;justify-content:center;align-items:center;height:100vh;font-family:Arial;background:#f4f6f9}
-.box{background:white;padding:20px;width:300px}
-input{width:100%;padding:10px;margin:10px 0}
-button{width:100%;padding:10px;background:#2563eb;color:white}
-</style>
+<link rel="stylesheet" href="assets/style.css">
 </head>
 
 <body>
 
-<div class="box">
-<h3>NGO Login</h3>
+<div class="login-box">
+<h2>NGO Login</h2>
 
 <input id="user" placeholder="User ID">
 <input id="pass" type="password" placeholder="Password">
@@ -23,39 +18,7 @@ button{width:100%;padding:10px;background:#2563eb;color:white}
 <p id="msg"></p>
 </div>
 
-<script>
-
-const API = "YOUR_SCRIPT_URL_HERE?action=login";
-
-async function login(){
-
-  let res = await fetch(API,{
-    method:"POST",
-    body: JSON.stringify({
-      userId:user.value,
-      password:pass.value
-    })
-  });
-
-  let r = await res.json();
-
-  if(r.status=="success"){
-
-    localStorage.setItem("role",r.role);
-    localStorage.setItem("district",r.district);
-
-    if(r.role=="admin"){
-      window.location="dashboard.html";
-    }else{
-      window.location="dashboard.html";
-    }
-
-  }else{
-    msg.innerText="Invalid Login";
-  }
-}
-
-</script>
+<script src="assets/script.js"></script>
 
 </body>
 </html>
